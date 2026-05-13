@@ -1,0 +1,51 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Baker - Bakery Website Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <!-- Favicon -->
+    <link href="~/img/favicon.ico" rel="icon">
+    <partial name="_Css" />
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    <!-- Spinner End -->
+    <partial name="_Topbar" />
+    <partial name="_Navbar" />
+    <partial name="_Header" />
+    <!-- Product Start -->
+    <div class="container-xxl bg-light">
+        <div class="container">
+            <partial name="_Contract" />
+            <partial name="_Introduce"/>
+                <div class="container">
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
+        </div>
+    </div>
+    <!-- Product End -->
+
+    <partial name="_Footer" />
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    
+
+    <partial name="_Scripts" />
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

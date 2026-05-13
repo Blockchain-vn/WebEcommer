@@ -1,0 +1,67 @@
+﻿
+@model IEnumerable<WebEcommer.Models.ViewModels.ProductViewModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row g-4">
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
+                <div class="text-center p-4">
+                    <div class="d-inline-block border border-primary rounded-pill px-3 mb-3">$11 - $99</div>
+                    @{ var title = item.TenHh ?? string.Empty; var shortTitle = title.Length > 40 ? title.Substring(0,40) + "..." : title; }
+                    <h3 class="mb-3">@shortTitle</h3>
+                    @{ 
+                        var desc = item.MoTa ?? string.Empty;
+                        var shortDesc = desc.Length > 150 ? desc.Substring(0, 150) + "..." : desc;
+                    }
+                    <span>@shortDesc</span>
+                </div>
+                <div class="position-relative mt-auto">
+                    <img class="img-fluid" src="@item.ImageUrl" alt="@item.TenHh">
+                    <div class="product-overlay d-flex justify-content-center">
+                        <a class="btn btn-lg-square btn-outline-light rounded-circle me-2" href=""><i class="fa fa-eye text-primary"></i></a>
+                        <form method="post" asp-controller="Cart" asp-action="AddToCart" class="d-inline-block">
+                            <input type="hidden" name="maHh" value="@item.MaHh" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="btn btn-sm btn-warning">Thêm vào giỏ</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+</div>
+
+@{
+    var currentPage = ViewBag.Page as int? ?? 1;
+    var currentRecord = ViewBag.Record as int? ?? 9;
+    var totalPages = ViewBag.TotalPages as int? ?? 1;
+    var maxNumbers = 9; // hiển thị tối đa 1..9
+    var lastNumber = System.Math.Min(totalPages, maxNumbers);
+}
+
+<div class="d-flex justify-content-between align-items-center mt-4">
+    <div>
+        @for (int i = 1; i <= lastNumber; i++)
+        {
+            if (i == currentPage)
+            {
+                <a class="btn btn-sm btn-primary me-1" href="@Url.Action("Index", new { page = i, record = 12 })">@i</a>
+            }
+            else
+            {
+                <a class="btn btn-sm btn-outline-primary me-1" href="@Url.Action("Index", new { page = i, record = 12 })">@i</a>
+            }
+        }
+    </div>
+
+
+</div>

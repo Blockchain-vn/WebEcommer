@@ -1,0 +1,66 @@
+@model WebEcommer.Models.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Đăng ký";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Đăng ký</h2>
+
+@if (!ViewData.ModelState.IsValid && ViewData.ModelState.ErrorCount > 0)
+{
+    <div class="alert alert-danger">
+        <h4>Có lỗi xảy ra:</h4>
+        <ul>
+            @foreach (var modelState in ViewData.ModelState.Values)
+            {
+                @foreach (var error in modelState.Errors)
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            }
+        </ul>
+    </div>
+}
+
+<form asp-action="Register" method="post">
+    <div class="form-group">
+        <label for="HoTen">Họ tên</label>
+        <input asp-for="HoTen" class="form-control" />
+        <span asp-validation-for="HoTen" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="MatKhau">Mật khẩu</label>
+        <input asp-for="MatKhau" class="form-control" />
+        <span asp-validation-for="MatKhau" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="ConfirmMatKhau">Xác nhận mật khẩu</label>
+        <input asp-for="ConfirmMatKhau" class="form-control" />
+        <span asp-validation-for="ConfirmMatKhau" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="DienThoai">Điện thoại</label>
+        <input asp-for="DienThoai" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="DiaChi">Địa chỉ</label>
+        <input asp-for="DiaChi" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Đăng ký</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

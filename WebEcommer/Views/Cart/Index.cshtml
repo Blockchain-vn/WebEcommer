@@ -1,0 +1,74 @@
+@model IEnumerable<WebEcommer.Models.GioHang>
+
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Giỏ hàng của bạn</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <p>Giỏ hàng trống.</p>
+}
+else
+{
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Ảnh</th>
+                <th>Sản phẩm</th>
+                <th>Đơn giá</th>
+                <th style="width: 150px;">Số lượng</th>
+                <th>Thành tiền</th>
+                <th>Ngày thêm</th>
+                <th>Hành động</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var hh = item.HangHoa;
+                var imgFile = hh?.Hinh ?? string.Empty;
+                var imgUrl = Url.Content($"~/image/Hinh/HangHoa/{(string.IsNullOrEmpty(imgFile) ? "default.jpg" : imgFile)}");
+                var donGia = hh?.DonGia ?? 0.0;
+                var thanhTien = donGia * item.SoLuong;
+                <tr>
+                    <td style="width:80px;"><img src="@imgUrl" alt="@hh?.TenHh" style="max-width:70px; max-height:70px;" /></td>
+                    <td>
+                        <strong>@hh?.TenHh</strong>
+                    </td>
+                    <td>@(donGia.ToString("N0")) ₫</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <form asp-action="UpdateQuantity" method="post" class="d-inline">
+                                <input type="hidden" name="maGh" value="@item.MaGh" />
+                                <input type="hidden" name="quantity" value="@(item.SoLuong - 1)" />
+                                <button type="submit" class="btn btn-sm btn-outline-secondary">-</button>
+                            </form>
+                            <span class="mx-3 fw-bold">@item.SoLuong</span>
+                            <form asp-action="UpdateQuantity" method="post" class="d-inline">
+                                <input type="hidden" name="maGh" value="@item.MaGh" />
+                                <input type="hidden" name="quantity" value="@(item.SoLuong + 1)" />
+                                <button type="submit" class="btn btn-sm btn-outline-secondary">+</button>
+                            </form>
+                        </div>
+                    </td>
+                    <td class="text-primary fw-bold">@(thanhTien.ToString("N0")) ₫</td>
+                    <td>@item.NgayThem.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>
+                        <form asp-action="RemoveFromCart" method="post" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này?');">
+
+                            <input type="hidden" name="maGh" value="@item.MaGh" />
+                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-trash"></i> Xóa
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}

@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "Xác thực OTP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">Xác thực Email</h3>
+                </div>
+                <div class="card-body">
+                    <p>Vui lòng nhập mã OTP đã được gửi đến email của bạn.</p>
+                    
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-info">@TempData["Success"]</div>
+                    }
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <form asp-action="VerifyOTP" method="post">
+                        <div class="form-group mb-3">
+                            <label for="otp" class="form-label">Mã OTP (6 chữ số)</label>
+                            <input type="text" name="otp" class="form-control form-control-lg text-center" 
+                                   placeholder="000000" maxlength="6" required autofocus />
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Xác nhận</button>
+                        </div>
+                    </form>
+                    
+                    <div class="mt-3 text-center">
+                        <p>Không nhận được mã? <a href="@Url.Action("Register")">Quay lại đăng ký</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
