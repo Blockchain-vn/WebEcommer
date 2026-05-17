@@ -1,55 +1,54 @@
-﻿<!-- Footer Start -->
+<!-- Footer Start -->
 <div class="container-fluid bg-dark text-light footer my-6 mb-0 py-5 wow fadeIn" data-wow-delay="0.1s">
     <div class="container py-5">
         <div class="row g-5">
             <div class="col-lg-3 col-md-6">
-                <h4 class="text-light mb-4">Office Address</h4>
-                <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                <h4 class="text-light mb-4">Địa chỉ văn phòng</h4>
+                <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Landmark 72, Phạm Hùng, Cầu Giấy, Hà Nội</p>
+                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 6789</p>
+                <p class="mb-2"><i class="fa fa-envelope me-3"></i>support@ecommer.com</p>
                 <div class="d-flex pt-2">
-                    <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-twitter"></i></a>
                     <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-twitter"></i></a>
                     <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-youtube"></i></a>
                     <a class="btn btn-square btn-outline-light rounded-circle me-0" href=""><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
-                <h4 class="text-light mb-4">Quick Links</h4>
-                <a class="btn btn-link" href="">About Us</a>
-                <a class="btn btn-link" href="">Contact Us</a>
-                <a class="btn btn-link" href="">Our Services</a>
-                <a class="btn btn-link" href="">Terms & Condition</a>
-                <a class="btn btn-link" href="">Support</a>
+                <h4 class="text-light mb-4">Liên kết nhanh</h4>
+                <a class="btn btn-link" href="@Url.Action("About", "Home")">Về chúng tôi</a>
+                <a class="btn btn-link" href="@Url.Action("Contact", "Home")">Liên hệ</a>
+                <a class="btn btn-link" href="@Url.Action("Services", "Home")">Dịch vụ</a>
+                <a class="btn btn-link" href="#">Điều khoản sử dụng</a>
+                <a class="btn btn-link" href="#">Hỗ trợ</a>
             </div>
             <div class="col-lg-3 col-md-6">
-                <h4 class="text-light mb-4">Quick Links</h4>
-                <a class="btn btn-link" href="">About Us</a>
-                <a class="btn btn-link" href="">Contact Us</a>
-                <a class="btn btn-link" href="">Our Services</a>
-                <a class="btn btn-link" href="">Terms & Condition</a>
-                <a class="btn btn-link" href="">Support</a>
+                <h4 class="text-light mb-4">Dịch vụ của chúng tôi</h4>
+                <a class="btn btn-link" href="#">Phần cứng & Linh kiện</a>
+                <a class="btn btn-link" href="#">Phần mềm & Bản quyền</a>
+                <a class="btn btn-link" href="#">Thiết bị ngoại vi</a>
+                <a class="btn btn-link" href="#">Hỗ trợ & Bảo trì kỹ thuật</a>
             </div>
             <div class="col-lg-3 col-md-6">
-                <h4 class="text-light mb-4">Photo Gallery</h4>
+                <h4 class="text-light mb-4">Thư viện ảnh</h4>
                 <div class="row g-2">
                     <div class="col-4">
-                        <img class="img-fluid bg-light rounded p-1" src="~/img/product-1.jpg" alt="Image">
+                        <img class="img-fluid bg-light rounded p-1" src="~/img/product-1.jpg" asp-append-version="true" alt="Image">
                     </div>
                     <div class="col-4">
-                        <img class="img-fluid bg-light rounded p-1" src="~/img/product-2.jpg" alt="Image">
+                        <img class="img-fluid bg-light rounded p-1" src="~/img/product-2.jpg" asp-append-version="true" alt="Image">
                     </div>
                     <div class="col-4">
-                        <img class="img-fluid bg-light rounded p-1" src="~/img/product-3.jpg" alt="Image">
+                        <img class="img-fluid bg-light rounded p-1" src="~/img/product-3.jpg" asp-append-version="true" alt="Image">
                     </div>
                     <div class="col-4">
-                        <img class="img-fluid bg-light rounded p-1" src="~/img/product-2.jpg" alt="Image">
+                        <img class="img-fluid bg-light rounded p-1" src="~/img/product-4.jpg" asp-append-version="true" alt="Image">
                     </div>
                     <div class="col-4">
-                        <img class="img-fluid bg-light rounded p-1" src="~/img/product-3.jpg" alt="Image">
+                        <img class="img-fluid bg-light rounded p-1" src="~/img/product-2.jpg" asp-append-version="true" alt="Image">
                     </div>
                     <div class="col-4">
-                        <img class="img-fluid bg-light rounded p-1" src="~/img/product-1.jpg" alt="Image">
+                        <img class="img-fluid bg-light rounded p-1" src="~/img/product-3.jpg" asp-append-version="true" alt="Image">
                     </div>
                 </div>
             </div>
@@ -62,11 +61,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                &copy; <a href="#">Your Site Name</a>, All Right Reserved.
+                &copy; <a href="@Url.Action("Index", "Home")">Ecommer</a>, Bảo lưu mọi quyền.
             </div>
             <div class="col-md-6 text-center text-md-end">
-                <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+                Thiết kế bởi <a href="#">Ecommer Team</a>
             </div>
         </div>
     </div>
