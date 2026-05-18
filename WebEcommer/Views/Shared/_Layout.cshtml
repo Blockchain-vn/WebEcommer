@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,14 +19,16 @@
         <div class="spinner-grow text-primary" role="status"></div>
     </div>
     <!-- Spinner End -->
-    <partial name="_Topbar" />
     <partial name="_Navbar" />
     <partial name="_Header" />
     <!-- Product Start -->
     <div class="container-xxl bg-light">
         <div class="container">
             <partial name="_Contract" />
-            <partial name="_Introduce"/>
+            @if (ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index")
+            {
+                <partial name="_Introduce"/>
+            }
                 <div class="container">
                     <main role="main" class="pb-3">
                         @RenderBody()
