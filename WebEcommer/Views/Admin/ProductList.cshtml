@@ -1,0 +1,84 @@
+@model IEnumerable<WebEcommer.Models.HangHoa>
+
+@{
+    ViewData["Title"] = "Danh sách sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h1>Quản lý sản phẩm</h1>
+    
+    <a href="@Url.Action("AddProduct")" class="btn btn-success mb-3">
+        <i class="fa fa-plus"></i> Thêm sản phẩm mới
+    </a>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Mã</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MaHh</td>
+                    <td>@item.TenHh</td>
+                    <td>@((item.DonGia ?? 0).ToString("N0")) ₫</td>
+                    <td>@item.SoLuong</td>
+                    <td>
+                        <a href="@Url.Action("EditProduct", new { id = item.MaHh })" class="btn btn-sm btn-warning">
+                            <i class="fa fa-edit"></i> Sửa
+                        </a>
+                        <form method="post" asp-action="DeleteProduct" asp-route-id="@item.MaHh" class="d-inline" onsubmit="return confirm('Xóa sản phẩm này?');">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="fa fa-trash"></i> Xóa
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Phân trang -->
+    @{
+        var currentPage = ViewBag.Page as int? ?? 1;
+        var totalPages = ViewBag.TotalPages as int? ?? 1;
+        var lastNumber = System.Math.Min(totalPages, 9);
+    }
+
+    <div class="d-flex justify-content-center mt-4">
+        @for (int i = 1; i <= lastNumber; i++)
+        {
+            if (i == currentPage)
+            {
+                <a class="btn btn-primary me-1">@i</a>
+            }
+            else
+            {
+                <a href="@Url.Action("ProductList", new { page = i })" class="btn btn-outline-primary me-1">@i</a>
+            }
+        }
+    </div>
+</div>

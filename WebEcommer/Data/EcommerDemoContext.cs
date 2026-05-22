@@ -36,7 +36,7 @@ public partial class EcommerDemoContext : DbContext
 
             entity.ToTable("HangHoa");
 
-            entity.Property(e => e.MaHh).HasColumnName("MaHH");
+            entity.Property(e => e.MaHh).HasColumnName("MaHH").ValueGeneratedOnAdd();
             entity.Property(e => e.DonGia).HasDefaultValue(0.0);
             entity.Property(e => e.Hinh).HasMaxLength(50);
             entity.Property(e => e.MaNcc)

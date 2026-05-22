@@ -7,68 +7,156 @@
 
 <h2>Giỏ hàng của bạn</h2>
 
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 @if (Model == null || !Model.Any())
 {
     <p>Giỏ hàng trống.</p>
 }
 else
 {
+    <form asp-controller="Checkout" asp-action="Index" method="post" id="cartForm" onsubmit="return validateCheckout()">
     <table class="table table-hover align-middle">
         <thead>
             <tr>
-                <th>Ảnh</th>
-                <th>Sản phẩm</th>
-                <th>Đơn giá</th>
-                <th style="width: 150px;">Số lượng</th>
-                <th>Thành tiền</th>
-                <th>Ngày thêm</th>
-                <th>Hành động</th>
+                <th><input type="checkbox" id="selectAll" class="form-check-input" onchange="toggleSelectAll()" /></th>
+            <th>Ảnh</th>
+            <th>Sản phẩm</th>
+            <th>Đơn giá</th>
+            <th style="width: 150px;">Số lượng</th>
+            <th>Thành tiền</th>
+            <th>Ngày thêm</th>
+            <th>Hành động</th>
 
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var hh = item.HangHoa;
+            var imgFile = hh?.Hinh ?? string.Empty;
+            var imgUrl = Url.Content($"~/image/Hinh/HangHoa/{(string.IsNullOrEmpty(imgFile) ? "default.jpg" : imgFile)}");
+            var donGia = hh?.DonGia ?? 0.0;
+            var thanhTien = donGia * item.SoLuong;
+            <tr>
+                <td>
+                    <input type="checkbox" name="selectedItems" value="@item.MaGh" class="form-check-input item-checkbox" data-price="@thanhTien" onchange="calculateTotal()" />
+                </td>
+                <td style="width:80px;"><img src="@imgUrl" alt="@hh?.TenHh" style="max-width:70px; max-height:70px;" /></td>
+                <td>
+                    <strong>@hh?.TenHh</strong>
+                </td>
+                <td>@(donGia.ToString("N0")) ₫</td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="updateQuantity(@item.MaGh, @(item.SoLuong - 1))" @(item.SoLuong <= 1 ? "disabled" : "")>-</button>
+                        <span class="mx-3 fw-bold">@item.SoLuong</span>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="updateQuantity(@item.MaGh, @(item.SoLuong + 1))">+</button>
+                    </div>
+                </td>
+                <td class="text-primary fw-bold">@(thanhTien.ToString("N0")) ₫</td>
+                <td>@item.NgayThem.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    <form asp-action="RemoveFromCart" method="post" class="d-inline" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này?');">
+                        <input type="hidden" name="maGh" value="@item.MaGh" />
+                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-trash"></i> Xóa
+                        </button>
+                    </form>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                var hh = item.HangHoa;
-                var imgFile = hh?.Hinh ?? string.Empty;
-                var imgUrl = Url.Content($"~/image/Hinh/HangHoa/{(string.IsNullOrEmpty(imgFile) ? "default.jpg" : imgFile)}");
-                var donGia = hh?.DonGia ?? 0.0;
-                var thanhTien = donGia * item.SoLuong;
-                <tr>
-                    <td style="width:80px;"><img src="@imgUrl" alt="@hh?.TenHh" style="max-width:70px; max-height:70px;" /></td>
-                    <td>
-                        <strong>@hh?.TenHh</strong>
-                    </td>
-                    <td>@(donGia.ToString("N0")) ₫</td>
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <form asp-action="UpdateQuantity" method="post" class="d-inline">
-                                <input type="hidden" name="maGh" value="@item.MaGh" />
-                                <input type="hidden" name="quantity" value="@(item.SoLuong - 1)" />
-                                <button type="submit" class="btn btn-sm btn-outline-secondary">-</button>
-                            </form>
-                            <span class="mx-3 fw-bold">@item.SoLuong</span>
-                            <form asp-action="UpdateQuantity" method="post" class="d-inline">
-                                <input type="hidden" name="maGh" value="@item.MaGh" />
-                                <input type="hidden" name="quantity" value="@(item.SoLuong + 1)" />
-                                <button type="submit" class="btn btn-sm btn-outline-secondary">+</button>
-                            </form>
-                        </div>
-                    </td>
-                    <td class="text-primary fw-bold">@(thanhTien.ToString("N0")) ₫</td>
-                    <td>@item.NgayThem.ToString("dd/MM/yyyy HH:mm")</td>
-                    <td>
-                        <form asp-action="RemoveFromCart" method="post" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này?');">
+        }
+    </tbody>
+</table>
+    
+    <div class="row mt-4">
+        <div class="col-md-6 offset-md-6 text-end">
+            <h4>Tổng tiền thanh toán: <span id="totalAmount" class="text-danger fw-bold">0</span> <span class="text-danger fw-bold">₫</span></h4>
+            <button type="submit" class="btn btn-primary btn-lg mt-2" id="btnCheckout" disabled>Xác nhận thanh toán</button>
+        </div>
+    </div>
+    </form>
+}
 
-                            <input type="hidden" name="maGh" value="@item.MaGh" />
-                            <button type="submit" class="btn btn-outline-danger btn-sm">
-                                <i class="bi bi-trash"></i> Xóa
-                            </button>
-                        </form>
-                    </td>
-                </tr>
+@section Scripts {
+    <script>
+        function validateCheckout() {
+            var checkboxes = document.querySelectorAll('.item-checkbox:checked');
+            if (checkboxes.length === 0) {
+                alert('Vui lòng chọn ít nhất 1 sản phẩm để thanh toán!');
+                return false;
             }
-        </tbody>
-    </table>
+            return true;
+        }
 
+        function updateQuantity(maGh, quantity) {
+            if (quantity < 0) {
+                alert('Số lượng không thể âm!');
+                return;
+            }
+
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '@Url.Action("UpdateQuantity", "Cart")';
+
+            var maGhInput = document.createElement('input');
+            maGhInput.type = 'hidden';
+            maGhInput.name = 'maGh';
+            maGhInput.value = maGh;
+
+            var quantityInput = document.createElement('input');
+            quantityInput.type = 'hidden';
+            quantityInput.name = 'quantity';
+            quantityInput.value = quantity;
+
+            form.appendChild(maGhInput);
+            form.appendChild(quantityInput);
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        function toggleSelectAll() {
+            var selectAll = document.getElementById('selectAll');
+            var checkboxes = document.querySelectorAll('.item-checkbox');
+            checkboxes.forEach(function (cb) {
+                cb.checked = selectAll.checked;
+            });
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            var checkboxes = document.querySelectorAll('.item-checkbox');
+            var total = 0;
+            var checkedCount = 0;
+            checkboxes.forEach(function (cb) {
+                if (cb.checked) {
+                    total += parseFloat(cb.getAttribute('data-price'));
+                    checkedCount++;
+                }
+            });
+
+            document.getElementById('totalAmount').innerText = total.toLocaleString('vi-VN');
+
+            var btnCheckout = document.getElementById('btnCheckout');
+            if (checkedCount > 0) {
+                btnCheckout.removeAttribute('disabled');
+            } else {
+                btnCheckout.setAttribute('disabled', 'disabled');
+            }
+
+            // Cập nhật trạng thái của selectAll nếu cần
+            var selectAll = document.getElementById('selectAll');
+            if (checkboxes.length > 0 && checkedCount === checkboxes.length) {
+                selectAll.checked = true;
+            } else {
+                selectAll.checked = false;
+            }
+        }
+    </script>
 }

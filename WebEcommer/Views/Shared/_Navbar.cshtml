@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http
 <!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
     <a href="@Url.Action("Index", "Home")" class="navbar-brand ms-4 ms-lg-0">
@@ -10,19 +10,19 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav mx-auto p-4 p-lg-0">
             <a href="@Url.Action("Index", "Home")" class="nav-item nav-link">Trang chủ</a>
-            <a href="about.html" class="nav-item nav-link">Về chúng tôi</a>
-            <a href="service.html" class="nav-item nav-link">Dịch vụ</a>
+            <a href="@Url.Action("About", "Home")" class="nav-item nav-link">Về chúng tôi</a>
+            <a href="@Url.Action("Services", "Home")" class="nav-item nav-link">Dịch vụ</a>
             <a href="@Url.Action("Index", "Home")" class="nav-item nav-link">Sản phẩm</a>
             <a href="@Url.Action("Index", "Cart")" class="nav-item nav-link">Giỏ hàng</a>
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Trang</a>
                 <div class="dropdown-menu m-0">
-                    <a href="team.html" class="dropdown-item">Đội ngũ của chúng tôi</a>
-                    <a href="testimonial.html" class="dropdown-item">Đánh giá</a>
-                    <a href="404.html" class="dropdown-item">Trang lỗi 404</a>
+                    <a href="@Url.Action("Team", "Home")" class="dropdown-item">Đội ngũ của chúng tôi</a>
+                    <a href="@Url.Action("Testimonial", "Home")" class="dropdown-item">Đánh giá</a>
+                    <a href="@Url.Action("Index", "Checkout")" class="dropdown-item">Thanh toán</a>
                 </div>
             </div>
-            <a href="contact.html" class="nav-item nav-link">Liên hệ</a>
+            <a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Liên hệ</a>
         </div>
     </div>
 
@@ -31,8 +31,8 @@
             <i class="fa fa-phone text-primary"></i>
         </div>
         <div class="ps-3">
-            <small class="text-primary mb-0">Call Us</small>
-            <p class="text-light fs-5 mb-0">+012 345 6789</p>
+            <small class="text-primary mb-0">Liên hệ</small>
+            <p class="text-light fs-5 mb-0">0399076806</p>
         </div>
     </div>
 
@@ -45,6 +45,16 @@
             <div class="nav-item dropdown d-inline-block">
                 <a class="nav-link dropdown-toggle text-light" href="#" data-bs-toggle="dropdown">Xin chào, @hoTen</a>
                 <div class="dropdown-menu dropdown-menu-end">
+                    @{
+                        var vaiTro = Context.Session.GetInt32("VaiTro");
+                    }
+                    @if (vaiTro.HasValue && vaiTro.Value == 1)
+                    {
+                        <a class="dropdown-item text-danger fw-bold" href="@Url.Action("ProductList", "Admin")">
+                            <i class="fa fa-cog me-1"></i> Quản lý sản phẩm
+                        </a>
+                        <div class="dropdown-divider"></div>
+                    }
                     <a class="dropdown-item" href="@Url.Action("Index", "Cart")">Giỏ hàng</a>
                     <a class="dropdown-item" href="@Url.Action("Logout", "Account")">Đăng xuất</a>
                 </div>

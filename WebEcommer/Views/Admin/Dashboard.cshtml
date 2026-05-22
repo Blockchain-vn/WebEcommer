@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h1>Admin Dashboard</h1>
+    
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Quản lý sản phẩm</h5>
+                    <p class="card-text">Thêm, sửa, xóa sản phẩm</p>
+                    <a href="@Url.Action("ProductList")" class="btn btn-primary">Xem danh sách</a>
+                    <a href="@Url.Action("AddProduct")" class="btn btn-success">Thêm sản phẩm</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Quản lý đơn hàng</h5>
+                    <p class="card-text">Xem và duyệt đơn hàng</p>
+                    <a href="@Url.Action("OrderList")" class="btn btn-primary">Xem danh sách</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

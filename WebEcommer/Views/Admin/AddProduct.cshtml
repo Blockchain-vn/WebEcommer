@@ -1,0 +1,90 @@
+@model WebEcommer.Models.HangHoa
+
+@{
+    ViewData["Title"] = "Thêm sản phẩm mới";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h1>@ViewData["Title"]</h1>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <form asp-action="AddProduct" method="post" enctype="multipart/form-data" class="mt-4">
+        <div class="mb-3">
+            <label for="TenHh" class="form-label">Tên sản phẩm *</label>
+            <input type="text" class="form-control" id="TenHh" name="TenHh" value="@Model?.TenHh" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="DonGia" class="form-label">Giá sản phẩm (₫) *</label>
+            <input type="number" class="form-control" id="DonGia" name="DonGia" value="@Model?.DonGia" required min="1" />
+        </div>
+
+        <div class="mb-3">
+            <label for="SoLuong" class="form-label">Số lượng *</label>
+            <input type="number" class="form-control" id="SoLuong" name="SoLuong" value="@Model?.SoLuong" required min="0" />
+        </div>
+
+        <div class="mb-3">
+            <label for="MaLoai" class="form-label">Loại sản phẩm *</label>
+            <select class="form-select" id="MaLoai" name="MaLoai" required>
+                <option value="">-- Chọn loại --</option>
+                @if (ViewBag.Loais != null)
+                {
+                    foreach (var loai in ViewBag.Loais as IEnumerable<WebEcommer.Models.Loai>)
+                    {
+                        <option value="@loai.MaLoai" selected="@(Model?.MaLoai == loai.MaLoai)">@loai.TenLoai</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="MaNcc" class="form-label">Nhà cung cấp *</label>
+            <select class="form-select" id="MaNcc" name="MaNcc" required>
+                <option value="">-- Chọn nhà cung cấp --</option>
+                @if (ViewBag.NhaCungCaps != null)
+                {
+                    foreach (var ncc in ViewBag.NhaCungCaps as IEnumerable<WebEcommer.Models.NhaCungCap>)
+                    {
+                        <option value="@ncc.MaNcc" selected="@(Model?.MaNcc == ncc.MaNcc)">@ncc.TenCongTy</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="MoTa" class="form-label">Mô tả</label>
+            <textarea class="form-control" id="MoTa" name="MoTa" rows="4">@Model?.MoTa</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="MoTaDonVi" class="form-label">Mô tả đơn vị</label>
+            <input type="text" class="form-control" id="MoTaDonVi" name="MoTaDonVi" value="@Model?.MoTaDonVi" />
+        </div>
+
+        <div class="mb-3">
+            <label for="imgFile" class="form-label">Ảnh sản phẩm</label>
+            <input type="file" class="form-control" id="imgFile" name="imgFile" accept="image/*" />
+        </div>
+
+        <button type="submit" class="btn btn-success">Thêm sản phẩm</button>
+        <a href="@Url.Action("ProductList")" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>
+

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebEcommer.Models;
 
@@ -28,6 +29,9 @@ public partial class HangHoa
     public string? MoTa { get; set; }
 
     public string MaNcc { get; set; } = null!;
+
+    [NotMapped]
+    public int SoLuong { get; set; }
 
     public virtual Loai MaLoaiNavigation { get; set; } = null!;
 

@@ -1,0 +1,79 @@
+@model IEnumerable<WebEcommer.Models.GioHang>
+
+@{
+    ViewData["Title"] = "Xác nhận đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    double tongTien = Model.Sum(i => i.SoLuong * (i.HangHoa?.DonGia ?? 0));
+}
+
+<div class="container py-5">
+    <h2 class="mb-4">Xác nhận đơn hàng</h2>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Danh sách sản phẩm</h5>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-borderless align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-4">Sản phẩm</th>
+                                <th>Đơn giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                var hh = item.HangHoa;
+                                var imgFile = hh?.Hinh ?? "default.jpg";
+                                var imgUrl = Url.Content($"~/image/Hinh/HangHoa/{imgFile}");
+                                var donGia = hh?.DonGia ?? 0;
+                                var thanhTien = donGia * item.SoLuong;
+                                
+                                <tr>
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center">
+                                            <img src="@imgUrl" alt="@hh?.TenHh" style="width: 50px; height: 50px; object-fit: cover;" class="me-3 rounded">
+                                            <span>@hh?.TenHh</span>
+                                        </div>
+                                    </td>
+                                    <td>@donGia.ToString("N0") ₫</td>
+                                    <td>@item.SoLuong</td>
+                                    <td class="fw-bold">@thanhTien.ToString("N0") ₫</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Tổng cộng</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Thành tiền:</span>
+                        <span class="fw-bold fs-5 text-danger">@tongTien.ToString("N0") ₫</span>
+                    </div>
+                    
+                    <form asp-controller="Checkout" asp-action="CreateOrder" method="post">
+                        @foreach (var item in Model)
+                        {
+                            <input type="hidden" name="selectedItems" value="@item.MaGh" />
+                        }
+                        <button type="submit" class="btn btn-primary w-100 btn-lg">
+                            <i class="bi bi-credit-card"></i> Thanh toán
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

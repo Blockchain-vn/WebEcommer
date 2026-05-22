@@ -1,0 +1,84 @@
+@{
+    ViewData["Title"] = "Đánh giá";
+}
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-6 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container text-center pt-5 pb-3">
+        <h1 class="display-4 text-white animated slideInDown mb-3">Đánh giá</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a class="text-white" href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a class="text-white" href="#">Trang</a></li>
+                <li class="breadcrumb-item text-primary active" aria-current="page">Đánh giá</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<!-- Testimonial Start -->
+<div class="container-xxl bg-light my-6 py-6 pb-0" style="margin: 12rem 0;">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <p class="text-primary text-uppercase mb-2">// Khách hàng nói gì về chúng tôi</p>
+            <h1 class="display-6 mb-4">Hơn 20,000+ khách hàng đã tin tưởng</h1>
+        </div>
+        <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+            <div class="testimonial-item bg-white rounded p-4">
+                <div class="d-flex align-items-center mb-4">
+                    <img class="flex-shrink-0 rounded-circle border p-1" src="~/img/testimonial-1.jpg" asp-append-version="true" alt="">
+                    <div class="ms-4">
+                        <h5 class="mb-1">Anh Tuấn</h5>
+                        <span>Lập trình viên</span>
+                    </div>
+                </div>
+                <p class="mb-0">Sản phẩm chất lượng, giao hàng cực nhanh và đóng gói cẩn thận. Rất hài lòng với dịch vụ hỗ trợ của shop!</p>
+            </div>
+            <div class="testimonial-item bg-white rounded p-4">
+                <div class="d-flex align-items-center mb-4">
+                    <img class="flex-shrink-0 rounded-circle border p-1" src="~/img/testimonial-2.jpg" asp-append-version="true" alt="">
+                    <div class="ms-4">
+                        <h5 class="mb-1">Chị Lan</h5>
+                        <span>Nhân viên văn phòng</span>
+                    </div>
+                </div>
+                <p class="mb-0">Các thiết bị phụ kiện ở đây rất tốt, nhân viên tư vấn nhiệt tình. Sẽ ủng hộ shop dài dài.</p>
+            </div>
+            <div class="testimonial-item bg-white rounded p-4">
+                <div class="d-flex align-items-center mb-4">
+                    <img class="flex-shrink-0 rounded-circle border p-1" src="~/img/testimonial-3.jpg" asp-append-version="true" alt="">
+                    <div class="ms-4">
+                        <h5 class="mb-1">Anh Minh</h5>
+                        <span>Thiết kế đồ hoạ</span>
+                    </div>
+                </div>
+                <p class="mb-0">Giá cả hợp lý so với thị trường, chính sách bảo hành rõ ràng. Mua linh kiện ở đây rất yên tâm.</p>
+            </div>
+            <div class="testimonial-item bg-white rounded p-4">
+                <div class="d-flex align-items-center mb-4">
+                    <img class="flex-shrink-0 rounded-circle border p-1" src="~/img/testimonial-4.jpg" asp-append-version="true" alt="">
+                    <div class="ms-4">
+                        <h5 class="mb-1">Chị Hoa</h5>
+                        <span>Kế toán</span>
+                    </div>
+                </div>
+                <p class="mb-0">Mình mua máy tính tại shop và được cài đặt phần mềm hoàn toàn miễn phí. Dịch vụ quá tuyệt vời!</p>
+            </div>
+        </div>
+        <div class="bg-primary text-light rounded-top p-5 my-6 mb-0 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="display-4 text-light mb-0">Đăng ký nhận tin tức</h1>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="position-relative">
+                        <input class="form-control bg-transparent border-light w-100 py-3 ps-4 pe-5" type="text" placeholder="Email của bạn">
+                        <button type="button" class="btn btn-dark py-2 px-3 position-absolute top-0 end-0 mt-2 me-2">Đăng ký</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Testimonial End -->
