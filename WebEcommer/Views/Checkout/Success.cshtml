@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = "Thanh toán thành công";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5 text-center">
+    <i class="bi bi-check-circle-fill text-success" style="font-size: 5rem;"></i>
+    <h1 class="text-success mt-3 mb-4">Giao dịch thành công!</h1>
+    <p class="lead">Cảm ơn bạn đã mua sắm tại cửa hàng của chúng tôi.</p>
+    <p>Đơn hàng của bạn đang được xử lý và sẽ được giao trong thời gian sớm nhất.</p>
+    
+    <div class="mt-5">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-lg me-2">Tiếp tục mua sắm</a>
+        <a href="@Url.Action("Index", "Cart")" class="btn btn-outline-secondary btn-lg">Xem giỏ hàng</a>
+    </div>
+</div>

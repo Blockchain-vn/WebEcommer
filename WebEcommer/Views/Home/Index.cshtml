@@ -6,6 +6,60 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!-- Form Tìm kiếm - TC01, TC02, TC03 -->
+<div class="mb-4">
+    <form method="get" asp-action="Search" asp-controller="Home" class="d-flex gap-2">
+        <input 
+            type="text" 
+            name="keyword" 
+            class="form-control" 
+            placeholder="Tìm kiếm sản phẩm..." 
+            required 
+            minlength="1"
+            maxlength="100"
+            value="@ViewBag.Keyword" />
+        <button type="submit" class="btn btn-primary">
+            <i class="fa fa-search"></i> Tìm kiếm
+        </button>
+    </form>
+</div>
+
+<!-- Hiển thị thông báo kết quả tìm kiếm -->
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa fa-check-circle"></i> @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fa fa-exclamation-circle"></i> @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["Info"] != null)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <i class="fa fa-info-circle"></i> @TempData["Info"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<!-- Hiển thị kết quả tìm kiếm -->
+@if (ViewBag.IsSearch)
+{
+    <div class="mb-3">
+        <p class="text-muted">
+            Kết quả tìm kiếm cho: <strong>"@ViewBag.Keyword"</strong> - 
+            Trang <strong>@ViewBag.Page</strong> / <strong>@ViewBag.TotalPages</strong>
+        </p>
+    </div>
+}
+
 <div class="row g-4">
 @if (Model != null)
 {
@@ -44,8 +98,10 @@
     var currentPage = ViewBag.Page as int? ?? 1;
     var currentRecord = ViewBag.Record as int? ?? 9;
     var totalPages = ViewBag.TotalPages as int? ?? 1;
-    var maxNumbers = 9; // hiển thị tối đa 1..9
+    var maxNumbers = 9;
     var lastNumber = System.Math.Min(totalPages, maxNumbers);
+    var isSearch = ViewBag.IsSearch ?? false;
+    var keyword = ViewBag.Keyword ?? "";
 }
 
 <div class="d-flex justify-content-center align-items-center mt-4">
@@ -54,14 +110,26 @@
         {
             if (i == currentPage)
             {
-                <a class="btn btn-sm btn-primary me-1" href="@Url.Action("Index", new { page = i, record = 12 })">@i</a>
+                @if (isSearch)
+                {
+                    <a class="btn btn-sm btn-primary me-1" href="@Url.Action("Search", new { page = i, record = currentRecord, keyword = keyword })">@i</a>
+                }
+                else
+                {
+                    <a class="btn btn-sm btn-primary me-1" href="@Url.Action("Index", new { page = i, record = currentRecord })">@i</a>
+                }
             }
             else
             {
-                <a class="btn btn-sm btn-outline-primary me-1" href="@Url.Action("Index", new { page = i, record = 12 })">@i</a>
+                @if (isSearch)
+                {
+                    <a class="btn btn-sm btn-outline-primary me-1" href="@Url.Action("Search", new { page = i, record = currentRecord, keyword = keyword })">@i</a>
+                }
+                else
+                {
+                    <a class="btn btn-sm btn-outline-primary me-1" href="@Url.Action("Index", new { page = i, record = currentRecord })">@i</a>
+                }
             }
         }
     </div>
-
-
 </div>
